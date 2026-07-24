@@ -3,221 +3,320 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GameZone - เว็บไซต์รีวิวและแนะนำเกมสุดฮิต</title>
+    <title>GAMEZONE - Modern Gaming Portal</title>
+    <!-- ดึงฟอนต์ Kanit และ Prompt จาก Google Fonts แก้ปัญหาฟอนต์ทุนจีน/ฟอนต์เดิมๆ -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600;700&family=Prompt:wght@300;400;600&display=swap" rel="stylesheet">
+    
     <style>
-        /* CSS การตกแต่งเว็บไซต์ */
+        :root {
+            --primary: #00f2fe;
+            --secondary: #4facfe;
+            --accent: #ff007f;
+            --bg-dark: #0b0f19;
+            --card-bg: rgba(22, 31, 49, 0.7);
+            --border-color: rgba(0, 242, 254, 0.2);
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+        }
+
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Kanit', 'Prompt', sans-serif;
+            scroll-behavior: smooth;
         }
 
         body {
-            background-color: #0f172a;
-            color: #f8fafc;
-            line-height: 1.6;
+            background-color: var(--bg-dark);
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(0, 242, 254, 0.1) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(255, 0, 127, 0.08) 0px, transparent 50%);
+            background-attachment: fixed;
+            color: var(--text-main);
+            line-height: 1.7;
         }
 
-        /* 1. ส่วนหัวเว็บไซต์ (Header) */
+        /* 1. Header สไตล์ Glassmorphic */
         header {
-            background-color: #1e293b;
-            padding: 1rem 2rem;
+            background: rgba(11, 15, 25, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1.2rem 3rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
             position: sticky;
             top: 0;
-            z-index: 100;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
         }
 
         .logo {
             font-size: 1.8rem;
-            font-weight: bold;
-            color: #38bdf8;
+            font-weight: 700;
+            letter-spacing: 1px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         nav ul {
             display: flex;
             list-style: none;
-            gap: 1.5rem;
+            gap: 2rem;
         }
 
         nav a {
-            color: #f8fafc;
+            color: var(--text-muted);
             text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s;
+            font-weight: 400;
+            font-size: 1.05rem;
+            transition: all 0.3s ease;
         }
 
         nav a:hover {
-            color: #38bdf8;
+            color: var(--primary);
+            text-shadow: 0 0 10px rgba(0, 242, 254, 0.5);
         }
 
-        /* 2. ส่วนเนื้อหา (Content) */
+        /* Layout Container */
         .container {
-            max-width: 900px;
-            margin: 2rem auto;
+            max-width: 1000px;
+            margin: 3rem auto;
             padding: 0 1.5rem;
         }
 
-        .main-title {
-            font-size: 2.2rem;
-            color: #38bdf8;
-            margin-bottom: 1rem;
+        /* 2. Main Content */
+        .hero-title {
+            font-size: 2.8rem;
+            font-weight: 700;
             text-align: center;
+            margin-bottom: 2rem;
+            background: linear-gradient(to right, #ffffff, var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.3;
         }
 
-        /* Gallery รูปภาพ 3 รูป */
+        /* Grid รูปภาพ 3 รูป ล้ำๆ */
         .image-gallery {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1rem;
-            margin: 2rem 0;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2.5rem 0;
         }
 
-        .image-gallery img {
+        .img-card {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transition: all 0.4s ease;
+        }
+
+        .img-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--primary);
+            box-shadow: 0 15px 35px rgba(0, 242, 254, 0.2);
+        }
+
+        .img-card img {
             width: 100%;
-            height: 200px;
+            height: 220px;
             object-fit: cover;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s;
+            display: block;
         }
 
-        .image-gallery img:hover {
-            transform: scale(1.03);
+        /* เนื้อหา 3 ย่อหน้า ในการ์ดหรู */
+        .content-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
         }
 
-        /* รายละเอียด 3 ย่อหน้า */
-        .content-section p {
-            margin-bottom: 1.2rem;
+        .content-card p {
+            margin-bottom: 1.5rem;
+            color: #cbd5e1;
+            font-weight: 300;
+            font-size: 1.1rem;
             text-indent: 2rem;
-            color: #cbd5e1;
         }
 
-        /* รายการแบบ Bullet */
-        .bullet-list {
-            background-color: #1e293b;
-            padding: 1.5rem 2rem;
-            border-radius: 8px;
-            margin: 2rem 0;
+        .content-card p:last-child {
+            margin-bottom: 0;
         }
 
-        .bullet-list h3 {
-            color: #38bdf8;
-            margin-bottom: 0.8rem;
-        }
-
-        .bullet-list ul {
-            padding-left: 1.5rem;
-        }
-
-        .bullet-list li {
-            margin-bottom: 0.5rem;
-            color: #cbd5e1;
-        }
-
-        /* 3. ระบบแสดงความคิดเห็น (Comment Section) */
-        .comment-section {
-            background-color: #1e293b;
+        /* Bullet List แบบนีออน */
+        .bullet-box {
+            background: linear-gradient(135deg, rgba(0, 242, 254, 0.05), rgba(255, 0, 127, 0.05));
+            border-left: 4px solid var(--primary);
+            border-radius: 0 16px 16px 0;
             padding: 2rem;
-            border-radius: 8px;
-            margin-top: 3rem;
+            margin: 2.5rem 0;
+        }
+
+        .bullet-box h3 {
+            color: var(--primary);
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .bullet-box ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .bullet-box li {
+            position: relative;
+            padding-left: 1.8rem;
+            margin-bottom: 0.8rem;
+            color: var(--text-main);
+            font-size: 1.05rem;
+        }
+
+        .bullet-box li::before {
+            content: "❖";
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+        }
+
+        /* 3. Comment Section */
+        .comment-section {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 2.5rem;
         }
 
         .comment-section h2 {
+            font-size: 1.8rem;
+            color: var(--primary);
             margin-bottom: 1.5rem;
-            color: #38bdf8;
         }
 
         .form-group {
-            margin-bottom: 1rem;
+            margin-bottom: 1.2rem;
         }
 
         .form-group label {
             display: block;
             margin-bottom: 0.5rem;
-            color: #f8fafc;
+            color: var(--text-muted);
+            font-size: 0.95rem;
         }
 
         .form-group input,
         .form-group textarea {
             width: 100%;
-            padding: 0.75rem;
-            border-radius: 6px;
-            border: 1px solid #475569;
-            background-color: #0f172a;
-            color: #f8fafc;
+            padding: 0.9rem 1.2rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(11, 15, 25, 0.6);
+            color: var(--text-main);
             font-size: 1rem;
+            transition: all 0.3s;
         }
 
         .form-group input:focus,
         .form-group textarea:focus {
             outline: none;
-            border-color: #38bdf8;
+            border-color: var(--primary);
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.2);
         }
 
         .submit-btn {
-            background-color: #0284c7;
-            color: white;
-            padding: 0.75rem 1.5rem;
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            color: #000;
+            padding: 0.9rem 2rem;
             border: none;
-            border-radius: 6px;
-            font-size: 1rem;
+            border-radius: 12px;
+            font-size: 1.05rem;
+            font-weight: 600;
             cursor: pointer;
-            font-weight: bold;
-            transition: background-color 0.3s;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 0.5rem;
         }
 
         .submit-btn:hover {
-            background-color: #0369a1;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0, 242, 254, 0.4);
         }
 
-        /* รายการความคิดเห็น */
+        /* ความคิดเห็นล่างฟอร์ม */
         .comment-list {
             margin-top: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
         }
 
         .comment-item {
-            background-color: #0f172a;
-            padding: 1rem;
-            border-radius: 6px;
-            margin-bottom: 1rem;
-            border-left: 4px solid #38bdf8;
+            background: rgba(11, 15, 25, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-left: 3px solid var(--accent);
+            padding: 1.2rem;
+            border-radius: 12px;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .comment-author {
-            font-weight: bold;
-            color: #38bdf8;
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 1.05rem;
             margin-bottom: 0.3rem;
         }
 
         .comment-text {
-            color: #e2e8f0;
+            color: var(--text-muted);
             white-space: pre-wrap;
+            font-weight: 300;
         }
 
-        /* 4. ส่วนท้ายเว็บไซต์ (Footer) */
+        /* 4. Footer Modern */
         footer {
-            background-color: #0284c7;
-            color: white;
+            background: rgba(11, 15, 25, 0.95);
+            border-top: 1px solid var(--border-color);
             text-align: center;
-            padding: 1.5rem;
-            margin-top: 4rem;
+            padding: 2rem;
+            margin-top: 5rem;
         }
 
         footer p {
-            margin: 0.3rem 0;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin: 0.2rem 0;
+        }
+
+        footer span {
+            color: var(--primary);
+            font-weight: 600;
         }
     </style>
 </head>
 <body>
 
-    <!-- 1. ส่วนหัวเว็บไซต์ (Header) -->
+    <!-- 1. Header -->
     <header>
-        <div class="logo">🎮 GAMEZONE</div>
+        <div class="logo">⚡ GAMEZONE</div>
         <nav>
             <ul>
                 <li><a href="#about">เกี่ยวกับเกม</a></li>
@@ -227,19 +326,25 @@
         </nav>
     </header>
 
-    <!-- 2. ส่วนเนื้อหา (Content) -->
+    <!-- 2. Content -->
     <div class="container">
-        <h1 class="main-title" id="about">เปิดโลกแห่งการผจญภัยในวิดีโอเกมยุคใหม่</h1>
+        <h1 class="hero-title" id="about">เปิดโลกแห่งการผจญภัยในวิดีโอเกมยุคใหม่</h1>
 
-        <!-- รูปภาพอย่างน้อย 3 รูป -->
+        <!-- รูปภาพ 3 รูป -->
         <div class="image-gallery">
-            <img src="https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=600&q=80" alt="ภาพการเล่นเกม 1">
-            <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=600&q=80" alt="ภาพบรรยากาศ eSports 2">
-            <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80" alt="จอยเกมอุปกรณการเล่น 3">
+            <div class="img-card">
+                <img src="https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=600&q=80" alt="ภาพการเล่นเกม 1">
+            </div>
+            <div class="img-card">
+                <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=600&q=80" alt="ภาพบรรยากาศ eSports 2">
+            </div>
+            <div class="img-card">
+                <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80" alt="จอยเกมอุปกรณการเล่น 3">
+            </div>
         </div>
 
-        <!-- เนื้อหาไม่น้อยกว่า 3 ย่อหน้า -->
-        <div class="content-section">
+        <!-- รายละเอียด 3 ย่อหน้า -->
+        <div class="content-card">
             <p>
                 ในปัจจุบัน วิดีโอเกมไม่ได้เป็นเพียงเครื่องมือเพื่อความบันเทิงในยามว่างอีกต่อไป แต่ได้วิวัฒนาการกลายเป็นอุตสาหกรรมสร้างสรรค์ที่มีมูลค่ามหาศาล รวมถึงเป็นสื่อกลางในการถ่ายทอดเรื่องราว ภาพศิลปะ และดนตรีประกอบอันทรงคุณค่า เทคโนโลยีที่ก้าวหน้าอย่างรวดเร็วทำให้เกมในปัจจุบันมีความสมจริงทั้งในด้านกราฟิกและระบบการเล่น ส่งผลให้ผู้เล่นสามารถดำดิ่งลงไปในโลกเสมือนจริงได้อย่างสมบูรณ์แบบ
             </p>
@@ -251,8 +356,8 @@
             </p>
         </div>
 
-        <!-- รายการแบบ Bullet -->
-        <div class="bullet-list" id="highlights">
+        <!-- Bullet List -->
+        <div class="bullet-box" id="highlights">
             <h3>🎯 ประโยชน์หลักของการเล่นเกมอย่างเหมาะสม</h3>
             <ul>
                 <li>ช่วยพัฒนาทักษะการวางแผนและการตัดสินใจอย่างรวดเร็ว</li>
@@ -262,47 +367,44 @@
             </ul>
         </div>
 
-        <!-- 3. ระบบแสดงความคิดเห็น (Comment Section) -->
+        <!-- 3. Comment Section -->
         <div class="comment-section" id="comments">
             <h2>💬 แสดงความคิดเห็น</h2>
             
             <form id="commentForm">
                 <div class="form-group">
-                    <label for="username">ชื่อผู้ใช้งาน:</label>
-                    <input type="text" id="username" placeholder="กรอกชื่อของคุณ..." required>
+                    <label for="username">ชื่อผู้ใช้งาน</label>
+                    <input type="text" id="username" placeholder="ระบุชื่อของคุณ..." required>
                 </div>
                 
                 <div class="form-group">
-                    <label for="commentText">ความคิดเห็น:</label>
-                    <textarea id="commentText" rows="4" placeholder="พิมพ์ความคิดเห็นที่นี่..." required></textarea>
+                    <label for="commentText">ความคิดเห็น</label>
+                    <textarea id="commentText" rows="4" placeholder="แสดงความคิดเห็นของคุณที่นี่..." required></textarea>
                 </div>
                 
-                <button type="submit" class="submit-btn">ส่งความคิดเห็น</button>
+                <button type="submit" class="submit-btn">ส่งความคิดเห็น 🚀</button>
             </form>
 
-            <!-- รายการความคิดเห็นที่จะแสดงทันทีเมื่อส่งฟอร์ม -->
             <div class="comment-list" id="commentList">
                 <!-- ความคิดเห็นใหม่จะถูกเพิ่มมาไว้ตรงนี้ (อยู่บนสุด) -->
             </div>
         </div>
     </div>
 
-    <!-- 4. ส่วนท้ายเว็บไซต์ (Footer) -->
+    <!-- 4. Footer -->
     <footer>
-        <p><strong>ผู้จัดทำ:</strong> ณิชณกุล กล่มแสร์</p>
-        <p><strong>ชั้นเรียน:</strong> มัธยมศึกษาปีที่ 3/2</p>
-        <p><strong>ปีการศึกษา:</strong> 2569</p>
+        <p>จัดทำโดย: <span>ณิชณกุล กล่มแสร์</span></p>
+        <p>ชั้นมัธยมศึกษาปีที่ <span>3/2</span> | ปีการศึกษา <span>2569</span></p>
     </footer>
 
-    <!-- JavaScript สำหรับระบบแสดงความคิดเห็น -->
+    <!-- JavaScript สำหรับระบบความคิดเห็น -->
     <script>
         const commentForm = document.getElementById('commentForm');
         const commentList = document.getElementById('commentList');
 
         commentForm.addEventListener('submit', function(event) {
-            event.preventDefault(); // ป้องกันหน้าเว็บรีเฟรชเมื่อกดส่ง
+            event.preventDefault();
 
-            // ดึงค่าจากฟอร์ม
             const usernameInput = document.getElementById('username');
             const commentTextInput = document.getElementById('commentText');
 
@@ -310,25 +412,22 @@
             const commentText = commentTextInput.value.trim();
 
             if (username !== "" && commentText !== "") {
-                // สร้าง Element สำหรับความคิดเห็นใหม่
                 const newComment = document.createElement('div');
                 newComment.classList.add('comment-item');
 
                 newComment.innerHTML = `
-                    <div class="comment-author">${escapeHTML(username)}</div>
+                    <div class="comment-author">👤 ${escapeHTML(username)}</div>
                     <div class="comment-text">${escapeHTML(commentText)}</div>
                 `;
 
-                // แทรกความคิดเห็นใหม่ไปไว้บนสุด (Prepend)
+                // ดันข้อความใหม่ขึ้นบนสุดเสมอ
                 commentList.insertBefore(newComment, commentList.firstChild);
 
-                // ล้างค่าในช่องกรอก
                 usernameInput.value = '';
                 commentTextInput.value = '';
             }
         });
 
-        // ฟังก์ชันช่วยป้องกันการใส่โค้ดอันตราย (XSS Protection)
         function escapeHTML(str) {
             return str.replace(/[&<>'"]/g, 
                 tag => ({
